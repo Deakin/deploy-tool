@@ -1,0 +1,15 @@
+#! /bin/bash
+
+service mint start &> /dev/null
+cp -rf /data/ /opt/researchdata/mint/home/data/ 
+cd /opt/researchdata/mint/server
+./tf_harvest.sh    Activities &> /dev/null
+./tf_harvest.sh    ANZSRC_FOR &> /dev/null
+./tf_harvest.sh    ANZSRC_SEO &> /dev/null
+./tf_harvest.sh    Funding_Bodies &> /dev/null
+./tf_harvest.sh    Languages &> /dev/null
+./tf_harvest.sh    MARC_Countries &> /dev/null
+./tf_harvest.sh    Parties_Groups &> /dev/null
+./tf_harvest.sh    Parties_People &> /dev/null
+./tf_harvest.sh    Services &> /dev/null
+

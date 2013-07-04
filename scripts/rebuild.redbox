@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export ENV=$1
+
+if [ ! "$ENV" = "test" ] && [ ! "$ENV" = "production" ]; then
+    echo Usage: `basename $0` ENV
+    echo Expected ENV: "test" or "production"
+    echo
+    exit
+fi
+
+
+service redbox stop
+
+# Compile REDBOX
+cd /opt/researchdata/institution-build/redbox
+
+# ReDBox has a setting in their install script that
+# requires the directory of code MUST managed by GIT
+git init
+
+mvn -s settings.xml -P redbox-$ENV -X clean install
+service redbox start
+
+
+# Restart HTTPD
+service httpd restart
+
+cd -

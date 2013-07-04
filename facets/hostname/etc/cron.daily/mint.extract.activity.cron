@@ -1,0 +1,24 @@
+#! /bin/bash
+
+DATADUMP=`mktemp -u`
+DATACSV=/data/Activities.csv
+DELIMITER="###"
+SQLFILE=/data/sql/activity_extract.sql
+HOST=`hostname -s`
+
+if [ "$HOST"=="hostname" ] ; then
+    ORACLECONNSTRING="username/password@DBSID"
+fi
+
+# echo exit left here in case the sqlplus fails and falls back to interactive cli.
+# echo exit will quite from that cli and keep this script go on
+echo exit | sqlplus -s $ORACLECONNSTRING "@$SQLFILE" "$DELIMITER" "$DATADUMP" &> /dev/null
+
+sed -r \
+	-e "s/,/ /g"                    \
+	-e "s/[[:space:]]{1,}/ /g"    \
+	-e "s/[[:space:]]$DELIMITER/$DELIMITER/g"     \
+	-e "s/$DELIMITER/,/g"                  \
+$DATADUMP > $DATACSV
+
+rm $DATADUMP

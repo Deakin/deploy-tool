@@ -1,0 +1,16 @@
+#! /bin/bash
+
+CURDIR=/opt/researchdata/mint/server
+
+cd $CURDIR
+
+service mint start &> /dev/null
+
+wget http://download.geonames.org/export/dump/allCountries.zip --quiet
+unzip -qq -o allCountries.zip allCountries.txt
+./geo_harvest.sh allCountries.txt
+
+rm -rf allCountries.zip allCountries.txt
+cd -
+
+sudo service mint restart

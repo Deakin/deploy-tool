@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# chkconfig:   3 90 10
+#
+### BEGIN INIT INFO
+# Provides:          mint
+# Default-Stop:      0 1 6
+# Short-Description: Researchdata Mint Daemon
+# description:       Web Server running 3rd-party "The Fascinator - Mint" service
+#                    Research Data Metadata Store Project.
+#                    Accessible http://researchdata-dev.its.deakin.edu.au:8080
+# processname:       /opt/researchdata/mint/server/tf.sh
+#                    ** this command will look after {start|stop|restart|status} ops
+# config:            /opt/researchdata/mint/server/tf_env.sh
+### END INIT INFO
+
+
+
+/opt/researchdata/mint/server/tf.sh $1
+
